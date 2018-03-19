@@ -1,8 +1,20 @@
 import * as R from "ramda";
 
-import { mapIndexed, intersects } from "../utils";
+import { mapIndexed, intersects, maxOf } from "../utils";
 
-export const nextPlayer = player => (player === "x" ? "o" : "x");
+export const nextPlayer = player => {
+  switch (player) {
+    case "x": {
+      return "o";
+    }
+    case "o": {
+      return "x";
+    }
+    default: {
+      throw new Error(`player can only be x or o, not ${player}`);
+    }
+  }
+};
 
 export const indexToCoordinates = index => {
   const x = indexToX(index);
@@ -10,8 +22,6 @@ export const indexToCoordinates = index => {
 
   return [x, y];
 };
-
-const filterEmpties = R.reject(R.isEmpty);
 
 export const findWinner = indexes => {
   if (filterEmpties(indexes).length === 9) {
@@ -33,6 +43,17 @@ export const findWinner = indexes => {
 
   return { player: undefined };
 };
+
+/**
+ * @param predicate
+ * @param game
+ */
+export const indexesMatching = predicate =>
+  R.pipe(
+    mapIndexed((tile, index) => [index, tile]),
+    R.filter(([, tile]) => predicate(tile)),
+    R.map(R.head)
+  );
 
 const hasWinner = type => R.pipe(game => indexesOfType(game)(type), hasLine);
 
@@ -62,23 +83,22 @@ const hasLine = indexes => {
   return { line: false };
 };
 
+const filterEmpties = R.reject(R.isEmpty);
+
 const indexToX = index => index % 3;
 const indexToY = index => Math.floor(index / 3);
 
 const indexToCoordinate = type => index =>
   type === "x" ? indexToX(index) : indexToY(index);
+
 const maxCountByCoordinate = type =>
   R.pipe(
     R.map(indexToCoordinate(type)),
     R.countBy(R.identity),
     R.toPairs,
-    R.sortBy(R.last),
-    R.last
+    maxOf(R.last),
+    ([count, position]) => [parseInt(count, 10), position]
   );
 
 const indexesOfType = game => type =>
-  R.pipe(
-    mapIndexed((tile, index) => [index, tile]),
-    R.filter(([, tile]) => tile === type),
-    R.map(R.head)
-  )(game);
+  indexesMatching(tile => tile === type)(game);

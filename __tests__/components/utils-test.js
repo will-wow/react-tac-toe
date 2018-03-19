@@ -1,4 +1,4 @@
-import { intersects } from "../../components/utils";
+import { intersects, maxOf } from "../../components/utils";
 
 describe("utils", () => {
   describe("intersects", () => {
@@ -6,9 +6,14 @@ describe("utils", () => {
       expect(intersects([1, 3], [3, 4, 1])).toBeTruthy();
     });
 
-     it("finds when there isn't an intersection", () => {
+    it("finds when there isn't an intersection", () => {
       expect(intersects([1, 3], [5, 4, 1])).toBeFalsy();
-    });   
+    });
+  });
+
+  describe("maxOf", () => {
+    it("finds the max", () => {
+      expect(maxOf(Math.round)([1.1, 1.2, 1.7])).toBe(1.7);
+    });
   });
 });
-
