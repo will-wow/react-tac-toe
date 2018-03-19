@@ -10,7 +10,8 @@
     "test": "jest",
     "format": "yarn format-eslint && yarn format-prettier",
     "format-eslint": "eslint --fix **/*.{js,jsx}",
-    "format-prettier": "prettier --write \"**/*.{js,jsx,json}\""
+    "format-prettier": "prettier --write \"**/*.{js,jsx,json}\"",
+    "deploy": "surge -p ./vr/build -d vr-tic-tac-toe.surge.sh"
   },
   "dependencies": {
     "ovrui": "~2.0.0",
@@ -36,6 +37,7 @@
     "prettier": "^1.11.1",
     "react-devtools": "^2.5.2",
     "react-test-renderer": "16.0.0",
+    "surge": "^0.20.1",
     "xopen": "1.0.0"
   },
   "jest": {
