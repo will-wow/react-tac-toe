@@ -1,11 +1,6 @@
 import * as R from "ramda";
 
-export const log = (...args) => data => {
-  console.log.apply(null, args.concat([data]));
-  return data;
-};
-
-export const mapIndexed = R.addIndex(R.map);
+import { mapIndexed, intersects } from "../utils";
 
 export const nextPlayer = player => (player === "x" ? "o" : "x");
 
@@ -50,8 +45,18 @@ const hasLine = indexes => {
 
   if (maxX === 3) {
     return { line: true, direction: "x", position: x };
-  } else if (maxY === 3) {
+  }
+
+  if (maxY === 3) {
     return { line: true, direction: "y", position: y };
+  }
+
+  if (intersects([0, 4, 8], indexes)) {
+    return { line: true, direction: "d", position: 0 };
+  }
+
+  if (intersects([2, 4, 6], indexes)) {
+    return { line: true, direction: "d", position: 2 };
   }
 
   return { line: false };
@@ -64,20 +69,16 @@ const indexToCoordinate = type => index =>
   type === "x" ? indexToX(index) : indexToY(index);
 const maxCountByCoordinate = type =>
   R.pipe(
-    log("indexes"),
     R.map(indexToCoordinate(type)),
     R.countBy(R.identity),
     R.toPairs,
-    log("pairs"),
     R.sortBy(R.last),
-    R.last,
-    log("max")
+    R.last
   );
 
 const indexesOfType = game => type =>
   R.pipe(
     mapIndexed((tile, index) => [index, tile]),
-    log("all index"),
     R.filter(([, tile]) => tile === type),
     R.map(R.head)
   )(game);

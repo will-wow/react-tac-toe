@@ -1,7 +1,8 @@
 import React from "react";
 import { View, VrButton } from "react-vr";
 
-import { mapIndexed, indexToCoordinates } from "./engine";
+import { mapIndexed } from "../utils";
+import { indexToCoordinates } from "./engine";
 
 import Line from "./Line";
 import Mark from "./Mark";

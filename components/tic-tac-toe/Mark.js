@@ -1,10 +1,12 @@
 import React from "react";
-import { View, Cylinder } from "react-vr";
+import { asset, View, Cylinder, Sound } from "react-vr";
 
 import Line from "./Line";
 
 const MarkX = () => (
   <View>
+    <Sound source={{ mp3: asset("chalk_1.mp3") }} />
+
     <Line rotateZ={45} long={1} short={0.1} color="#eeeeee" />
     <Line rotateZ={-45} long={1} short={0.1} color="#eeeeee" />
   </View>
@@ -18,7 +20,9 @@ const MarkO = () => (
     style={{
       transform: [{ rotateX: 45 }]
     }}
-  />
+  >
+    <Sound source={{ mp3: asset("chalk_2.mp3") }} />
+  </Cylinder>
 );
 
 const Mark = ({ x, o, translate }) => (
