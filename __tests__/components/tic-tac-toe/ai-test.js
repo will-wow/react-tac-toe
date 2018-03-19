@@ -15,7 +15,7 @@ describe("ai", () => {
         '', '', '',
       ];
 
-      expect(nextMove("o", board)).toBe(2);
+      expect(nextMove("o")(board)).toBe(2);
     });
 
     it("maximizes gains", () => {
@@ -26,7 +26,7 @@ describe("ai", () => {
         '', '', '',
       ];
 
-      expect(nextMove("x", board)).toBe(2);
+      expect(nextMove("x")(board)).toBe(2);
     });
   });
 });

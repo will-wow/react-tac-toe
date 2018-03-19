@@ -7,25 +7,27 @@ import { maxOf } from "../utils";
 const WIN_SCORE = 10;
 
 /* eslint-disable import/prefer-default-export */
-export const nextMove = (aiPlayer, game) => {
+export const nextMove = aiPlayer => game => {
   const { moveIndex } = bestScore(aiPlayer, aiPlayer, game, 0);
 
   return moveIndex;
 };
 
-const recurseNextMove = (
-  aiPlayer,
-  currentPlayer,
-  game,
-  depth,
-  moveIndex
-) => {
+const recurseNextMove = (aiPlayer, currentPlayer, game, depth, moveIndex) => {
   const winner = findWinner(game);
 
   if (winner.player) {
     return {
       player: currentPlayer,
       score: winnerScore(aiPlayer, winner) * (WIN_SCORE - depth),
+      moveIndex
+    };
+  }
+  
+  if (depth > 3) {
+     return {
+      player: currentPlayer,
+      score: 0,
       moveIndex
     };
   }
@@ -56,12 +58,7 @@ const bestScore = (aiPlayer, currentPlayer, game, depth) =>
     maxOf(sortScore(aiPlayer))
   )(game);
 
-const scoreMove = (
-  aiPlayer,
-  currentPlayer,
-  game,
-  depth
-) => moveIndex => {
+const scoreMove = (aiPlayer, currentPlayer, game, depth) => moveIndex => {
   return recurseNextMove(
     aiPlayer,
     currentPlayer,

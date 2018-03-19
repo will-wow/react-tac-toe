@@ -6,6 +6,7 @@ import * as R from "ramda";
 import Field from "./Field";
 
 import { nextPlayer, findWinner } from "./engine";
+import { nextMove } from "./ai";
 import EndGameMessage from "./EndGameMessage";
 
 const defaultState = {
@@ -36,6 +37,8 @@ class TicTacToe extends Component {
         game: updatedGame,
         currentPlayer: nextPlayer(currentPlayer)
       });
+
+      setTimeout(this.aiMove);
     } else {
       this.setState({
         game: updatedGame,
@@ -45,6 +48,16 @@ class TicTacToe extends Component {
   };
 
   onReset = () => this.setState(defaultState);
+
+  aiMove = () => {
+    const { game, currentPlayer } = this.state;
+
+    if (currentPlayer === "x") {
+      return;
+    }
+
+    R.pipe(nextMove(currentPlayer), this.onMove)(game);
+  };
 
   render() {
     const { game, winner } = this.state;
