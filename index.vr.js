@@ -9,19 +9,23 @@ class ReactTacToe extends React.Component {
     super();
 
     this.state = {
-      playing: true
+      playing: false
     };
   }
 
-  startGame = () => this.setState({playing: true});
-  endGame = () => this.setState({playing: false});
+  startGame = () => this.setState({ playing: true });
+  endGame = () => this.setState({ playing: false });
 
   render() {
     const { playing } = this.state;
     return (
       <View>
-        <Pano source={asset("fort-night.jpg")}/>
-        {!playing ? <MainMenu onStart={this.startGame} /> : <TicTacToe />}
+        <Pano source={asset("fort-night.jpg")} />
+        {!playing ? (
+          <MainMenu onStart={this.startGame}  />
+        ) : (
+          <TicTacToe onDone={this.endGame} />
+        )}
       </View>
     );
   }
@@ -29,7 +33,4 @@ class ReactTacToe extends React.Component {
 
 export default ReactTacToe;
 
-AppRegistry.registerComponent(
-  "ReactTacToe",
-  () => ReactTacToe
-);
+AppRegistry.registerComponent("ReactTacToe", () => ReactTacToe);
