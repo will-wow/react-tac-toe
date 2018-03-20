@@ -8,39 +8,57 @@ const WIN_SCORE = 10;
 
 /* eslint-disable import/prefer-default-export */
 export const nextMove = aiPlayer => game => {
-  const { moveIndex } = bestScore(aiPlayer, aiPlayer, game, 0);
+  const { moveIndex } = bestPossibleMove(aiPlayer, game, 0);
 
   return moveIndex;
 };
 
-const recurseNextMove = (aiPlayer, currentPlayer, game, depth, moveIndex) => {
+const bestPossibleMove = (currentPlayer, game, depth) =>
+  R.pipe(
+    indexesOfEmptyTiles,
+    R.map(scoreMove(currentPlayer, game, depth)),
+    maxScore
+  )(game);
+
+const scoreMove = (currentPlayer, game, depth) => moveIndex => {
+  const score = calculateMoveScore(
+    currentPlayer,
+    putPlayerOnTile(currentPlayer, game, moveIndex),
+    depth
+  );
+
+  return {
+    moveIndex,
+    score
+  };
+};
+
+const calculateMoveScore = (currentPlayer, game, depth) => {
   const winner = findWinner(game);
 
   if (winner.player) {
-    return {
-      player: currentPlayer,
-      score: winnerScore(aiPlayer, winner) * (WIN_SCORE - depth),
-      moveIndex
-    };
-  }
-  
-  if (depth > 3) {
-     return {
-      player: currentPlayer,
-      score: 0,
-      moveIndex
-    };
+    return winnerScore(currentPlayer, winner.player) * (WIN_SCORE - depth);
   }
 
-  return bestScore(aiPlayer, currentPlayer, game, depth + 1);
+  if (depth > 4) {
+    return 0;
+  }
+
+  const { score } = bestPossibleMove(
+    nextPlayer(currentPlayer),
+    game,
+    depth + 1
+  );
+
+  return -score;
 };
 
-const winnerScore = (player, winner) => {
-  switch (winner.player) {
+const winnerScore = (currentPlayer, winnerPlayer) => {
+  switch (winnerPlayer) {
     case "cats": {
       return 0;
     }
-    case player: {
+    case currentPlayer: {
       return 1;
     }
     default: {
@@ -51,25 +69,9 @@ const winnerScore = (player, winner) => {
 
 const indexesOfEmptyTiles = indexesMatching(R.isEmpty);
 
-const bestScore = (aiPlayer, currentPlayer, game, depth) =>
-  R.pipe(
-    indexesOfEmptyTiles,
-    R.map(scoreMove(aiPlayer, nextPlayer(currentPlayer), game, depth)),
-    maxOf(sortScore(aiPlayer))
-  )(game);
+const putPlayerOnTile = (currentPlayer, game, moveIndex) =>
+  R.update(moveIndex, currentPlayer, game);
 
-const scoreMove = (aiPlayer, currentPlayer, game, depth) => moveIndex => {
-  return recurseNextMove(
-    aiPlayer,
-    currentPlayer,
-    putPlayerOnTile(game, currentPlayer)(moveIndex),
-    depth,
-    moveIndex
-  );
-};
+const getScore = R.prop("score");
 
-const putPlayerOnTile = (game, currentPlayer) => index =>
-  R.update(index, currentPlayer, game);
-
-const sortScore = aiPlayer => ({ score, player }) =>
-  aiPlayer === player ? score : -score;
+const maxScore = maxOf(getScore);

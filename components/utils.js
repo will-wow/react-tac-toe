@@ -1,9 +1,13 @@
 import * as R from "ramda";
 
 export const log = (...args) => data => {
-  console.log.apply(null, args.concat([data]));
+  const logArgs = args.concat([data]);
+  console.log(...logArgs);
   return data;
 };
+
+export const logIf = (predicate, ...args) => data => 
+  predicate(data) ? log(...args)(data) : data
 
 export const mapIndexed = R.addIndex(R.map);
 

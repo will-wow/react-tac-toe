@@ -8,7 +8,7 @@ const Title = () => (
         fontSize: 0.5,
         fontWeight: "400",
         textAlign: "center",
-        textAlignVertical: "center",
+        textAlignVertical: "center"
       }}
     >
       React Tac Toe

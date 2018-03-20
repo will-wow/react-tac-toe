@@ -25,7 +25,7 @@ const EndGameMessage = ({ player, onClick }) => (
       >
         {endGameText(player)}
       </Text>
-      <Text 
+      <Text
         style={{
           fontSize: 0.25,
           fontWeight: "400",
@@ -33,7 +33,9 @@ const EndGameMessage = ({ player, onClick }) => (
           textAlignVertical: "center",
           color: "white"
         }}
-      >Again?</Text>
+      >
+        Again?
+      </Text>
     </View>
   </VrButton>
 );

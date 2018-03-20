@@ -22,7 +22,7 @@ class ReactTacToe extends React.Component {
       <View>
         <Pano source={asset("fort-night.jpg")} />
         {!playing ? (
-          <MainMenu onStart={this.startGame}  />
+          <MainMenu onStart={this.startGame} />
         ) : (
           <TicTacToe onDone={this.endGame} />
         )}

@@ -1,7 +1,7 @@
 import {
   nextPlayer,
   indexesMatching,
-findWinner
+  findWinner
 } from "../../../components/tic-tac-toe/engine";
 
 describe("ai", () => {
@@ -32,8 +32,8 @@ describe("ai", () => {
     });
   });
 
-  describe('findWinner', () => {
-    it('finds a horizontal winner', () => {
+  describe("findWinner", () => {
+    it("finds a horizontal winner", () => {
       // prettier-ignore
       const game = [
         'x', 'x', 'x',
@@ -42,10 +42,10 @@ describe("ai", () => {
       ];
 
       expect(findWinner(game)).toEqual({
-        player: 'x',
-        direction: 'y',
+        player: "x",
+        direction: "y",
         position: 0
       });
-    })
-  })
+    });
+  });
 });

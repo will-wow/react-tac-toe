@@ -24,10 +24,6 @@ export const indexToCoordinates = index => {
 };
 
 export const findWinner = indexes => {
-  if (filterEmpties(indexes).length === 9) {
-    return { player: "cats" };
-  }
-
   const xResult = hasWinner("x")(indexes);
   const oResult = hasWinner("o")(indexes);
 
@@ -37,8 +33,12 @@ export const findWinner = indexes => {
   }
 
   if (oResult.line) {
-    const { direction, position } = xResult;
+    const { direction, position } = oResult;
     return { player: "o", direction, position };
+  }
+
+  if (filterEmpties(indexes).length === 9) {
+    return { player: "cats" };
   }
 
   return { player: undefined };
