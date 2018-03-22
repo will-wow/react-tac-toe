@@ -13,12 +13,22 @@ export const nextMove = aiPlayer => game => {
   return moveIndex;
 };
 
-const bestPossibleMove = (currentPlayer, game, depth) =>
+const stateToKey = (currentPlayer, game) =>
+  R.pipe(
+    R.map(tile => (tile === "" ? " " : tile)),
+    R.append(currentPlayer),
+    R.join("")
+  )(game);
+
+const memoize = R.memoizeWith(stateToKey);
+
+const bestPossibleMove = memoize((currentPlayer, game, depth) =>
   R.pipe(
     indexesOfEmptyTiles,
     R.map(scoreMove(currentPlayer, game, depth)),
     maxScore
-  )(game);
+  )(game)
+);
 
 const scoreMove = (currentPlayer, game, depth) => moveIndex => {
   const score = calculateMoveScore(

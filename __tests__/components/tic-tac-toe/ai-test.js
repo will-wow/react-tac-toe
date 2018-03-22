@@ -1,3 +1,4 @@
+import * as R from "ramda";
 import { nextMove } from "../../../components/tic-tac-toe/ai";
 
 describe("ai", () => {
@@ -13,26 +14,13 @@ describe("ai", () => {
       expect(nextMove("o")(board)).toBe(2);
     });
 
-    it("minimizes losses", () => {
-      // prettier-ignore
-      const board = [
-        '', '', '',
-        '', '', '',
-        '', '', 'x',
-      ];
+    [0, 2, 6, 8].forEach(i => {
+      it("minimizes losses", () => {
+        let board = R.repeat("", 9);
+        board = R.update(i, "x", board);
 
-      expect(nextMove("o")(board)).toBe(4);
-    });
-
-    it("minimizes losses", () => {
-      // prettier-ignore
-      const board = [
-        '', '', 'x',
-        '', '', '',
-        '', '', '',
-      ];
-
-      expect(nextMove("o")(board)).toBe(4);
+        expect(nextMove("o")(board)).toBe(4);
+      });
     });
 
     it("minimizes losses", () => {
@@ -46,7 +34,7 @@ describe("ai", () => {
       expect(nextMove("o")(board)).toBe(6);
     });
 
-    it('minimizes losses', () => {
+    it("minimizes losses", () => {
       // prettier-ignore
       const board = [
         '', '', '',
@@ -55,7 +43,7 @@ describe("ai", () => {
       ];
 
       expect(nextMove("o")(board)).toBe(4);
-    })
+    });
 
     it("maximizes gains", () => {
       // prettier-ignore

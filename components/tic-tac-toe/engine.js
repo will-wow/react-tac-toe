@@ -24,8 +24,8 @@ export const indexToCoordinates = index => {
 };
 
 export const findWinner = indexes => {
-  const xResult = hasWinner("x")(indexes);
-  const oResult = hasWinner("o")(indexes);
+  const xResult = didXWin(indexes);
+  const oResult = didOWin(indexes);
 
   if (xResult.line) {
     const { direction, position } = xResult;
@@ -55,14 +55,12 @@ export const indexesMatching = predicate =>
     R.map(R.head)
   );
 
-const hasWinner = type => R.pipe(game => indexesOfType(game)(type), hasLine);
-
 const hasLine = indexes => {
   if (indexes.length === 0) {
     return { line: false };
   }
-  const [x, maxX] = maxCountByCoordinate("x")(indexes);
-  const [y, maxY] = maxCountByCoordinate("y")(indexes);
+  const [x, maxX] = maxCountByCoordinateX(indexes);
+  const [y, maxY] = maxCountByCoordinateY(indexes);
 
   if (maxX === 3) {
     return { line: true, direction: "x", position: x };
@@ -83,6 +81,10 @@ const hasLine = indexes => {
   return { line: false };
 };
 
+const hasWinner = type => R.pipe(game => indexesOfType(game, type), hasLine);
+const didXWin = hasWinner("x");
+const didOWin = hasWinner("o");
+
 const filterEmpties = R.reject(R.isEmpty);
 
 const indexToX = index => index % 3;
@@ -91,14 +93,22 @@ const indexToY = index => Math.floor(index / 3);
 const indexToCoordinate = type => index =>
   type === "x" ? indexToX(index) : indexToY(index);
 
+const parseCountCoordinatePair = ([count, position]) => [
+  parseInt(count, 10),
+  position
+];
+
 const maxCountByCoordinate = type =>
   R.pipe(
     R.map(indexToCoordinate(type)),
     R.countBy(R.identity),
     R.toPairs,
     maxOf(R.last),
-    ([count, position]) => [parseInt(count, 10), position]
+    parseCountCoordinatePair
   );
 
-const indexesOfType = game => type =>
+const maxCountByCoordinateX = maxCountByCoordinate('x');
+const maxCountByCoordinateY = maxCountByCoordinate('y');
+
+const indexesOfType = (game, type) =>
   indexesMatching(tile => tile === type)(game);
