@@ -3,8 +3,7 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "start":
-      "node -e \"console.log('open browser at http://localhost:8081/vr/\\n\\n');\" && node node_modules/react-native/local-cli/cli.js start",
+    "start": "node -e \"console.log('open browser at http://localhost:8081/vr/\\n\\n');\" && node node_modules/react-native/local-cli/cli.js start",
     "bundle": "node node_modules/react-vr/scripts/bundle.js",
     "open": "node -e \"require('xopen')('http://localhost:8081/vr/')\"",
     "devtools": "react-devtools",
@@ -16,14 +15,16 @@
     "deploy": "surge -p ./vr/build -d vr-tic-tac-toe.surge.sh"
   },
   "dependencies": {
+    "@rxreact/core": "^1.0.2",
     "ovrui": "~2.0.0",
     "ramda": "^0.25.0",
-    "react-native-typescript-transformer": "^1.2.3",
+    "react": "16.0.0",
     "react-native": "~0.48.0",
+    "react-native-typescript-transformer": "^1.2.3",
+    "react-vr": "~2.0.0",
     "react-vr-controller-raycaster": "^1.0.0",
     "react-vr-web": "~2.0.0",
-    "react-vr": "~2.0.0",
-    "react": "16.0.0",
+    "rxjs": "^5.5.7",
     "three": "^0.87.0"
   },
   "devDependencies": {
@@ -56,7 +57,13 @@
     "transform": {
       "^.+\\.[jt]sx?$": "<rootDir>/jest/preprocessor.js"
     },
-    "testMatch": ["<rootDir>/src/**/*-test.{ts,js,tsx,jsx}"],
-    "moduleFileExtensions": ["ts", "tsx", "js"]
+    "testMatch": [
+      "<rootDir>/src/**/*-test.{ts,tsx}"
+    ],
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js"
+    ]
   }
 }

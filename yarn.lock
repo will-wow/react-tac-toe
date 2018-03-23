@@ -94,6 +94,10 @@
     reflect-metadata "^0.1.12"
     tslib "^1.8.1"
 
+"@rxreact/core@^1.0.2":
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/@rxreact/core/-/core-1.0.2.tgz#dbc2837c3e0592c85b3a74b44ffd281235b47383"
+
 "@types/jest@^22.2.2":
   version "22.2.2"
   resolved "https://registry.yarnpkg.com/@types/jest/-/jest-22.2.2.tgz#afe5dacbd00d65325f52da0ed3e76e259629ac9d"
@@ -5284,7 +5288,7 @@ rx-lite@*, rx-lite@^4.0.8:
   version "4.0.8"
   resolved "https://registry.yarnpkg.com/rx-lite/-/rx-lite-4.0.8.tgz#0b1e11af8bc44836f04a6407e92da42467b79444"
 
-rxjs@^5.5.2:
+rxjs@^5.5.2, rxjs@^5.5.7:
   version "5.5.7"
   resolved "https://registry.yarnpkg.com/rxjs/-/rxjs-5.5.7.tgz#afb3d1642b069b2fbf203903d6501d1acb4cda27"
   dependencies:
