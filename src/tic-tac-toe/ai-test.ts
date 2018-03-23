@@ -1,11 +1,12 @@
 import * as R from "ramda";
-import { nextMove } from "../../../components/tic-tac-toe/ai";
+import { nextMove } from "./ai";
+import * as TicTacToeGame from "./TicTacToeGame";
 
 describe("ai", () => {
   describe("nextMove", () => {
     it("minimizes losses", () => {
       // prettier-ignore
-      const board = [
+      const board: TicTacToeGame.Game = [
         'x', 'x', '',
         '', '', '',
         '', '', '',

@@ -1,23 +1,34 @@
-import React, { Component } from "react";
+import * as React from "react";
 import { asset, View, Sound } from "react-vr";
 import * as R from "ramda";
 
-// import {View} from 'react-vr';
+import { Player, Tile, Game, Winner } from "./TicTacToeGame";
+
 import Field from "./Field";
 
 import { nextPlayer, findWinner } from "./engine";
 import { nextMove } from "./ai";
 import EndGameMessage from "./EndGameMessage";
 
-const defaultState = {
-  game: R.repeat("", 9),
+interface TicTacToeState {
+  game: Game;
+  currentPlayer: Player;
+  winner: Winner | null;
+}
+
+const emptyTile: Tile = "";
+
+const defaultState: TicTacToeState = {
+  game: R.repeat(emptyTile, 9),
   currentPlayer: "x",
-  winner: undefined
+  winner: null
 };
 
-class TicTacToe extends Component {
-  constructor() {
-    super();
+class TicTacToe extends React.Component {
+  state: TicTacToeState;
+
+  constructor(props) {
+    super(props);
 
     this.state = defaultState;
   }
@@ -65,7 +76,7 @@ class TicTacToe extends Component {
     return (
       <View>
         <Sound
-          loop
+          loop={true}
           source={{
             mp3: asset("tetris.mp3")
           }}
@@ -73,7 +84,7 @@ class TicTacToe extends Component {
         {winner && (
           <EndGameMessage player={winner.player} onClick={this.onReset} />
         )}
-        <Field game={game} onMove={this.onMove} winner={winner} />
+        <Field game={game} onMove={this.onMove} />
       </View>
     );
   }

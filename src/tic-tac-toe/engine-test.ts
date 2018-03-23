@@ -2,7 +2,7 @@ import {
   nextPlayer,
   indexesMatching,
   findWinner
-} from "../../../components/tic-tac-toe/engine";
+} from "./engine";
 
 describe("ai", () => {
   describe("nextPlayer", () => {

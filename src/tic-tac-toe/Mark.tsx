@@ -1,4 +1,4 @@
-import React from "react";
+import * as React from "react";
 import { asset, View, Cylinder, Sound } from "react-vr";
 
 import Line from "./Line";
@@ -25,7 +25,13 @@ const MarkO = () => (
   </Cylinder>
 );
 
-const Mark = ({ x, o, translate }) => (
+interface MarkProps {
+  x?: boolean;
+  o?: boolean;
+  translate: [number, number, number];
+}
+
+const Mark: React.SFC<MarkProps> = ({ x, o, translate }) => (
   <View style={{ transform: [{ translate }] }}>
     {x && <MarkX />}
     {o && <MarkO />}

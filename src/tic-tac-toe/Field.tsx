@@ -1,5 +1,7 @@
-import React from "react";
+import * as React from "react";
 import { View, VrButton } from "react-vr";
+
+import * as Location from "./Location";
 
 import { mapIndexed } from "../utils";
 import { indexToCoordinates } from "./engine";
@@ -41,20 +43,22 @@ const tiles = onMove =>
     x = x * 2 - 2;
     y = y * 2 - 2;
 
-    const translate = [x, y, -5];
+    const translate: Location.Coordinates = [x, y, -5];
 
     switch (tile) {
       case "x": {
-        return <Mark key={index} x translate={translate} />;
+        return <Mark key={index} x={true} translate={translate} />;
       }
       case "o": {
-        return <Mark key={index} o translate={translate} />;
+        return <Mark key={index} o={true} translate={translate} />;
       }
       default: {
+        const onClick = () => onMove(index);
+
         return (
           <VrButton
             key={index}
-            onClick={() => onMove(index)}
+            onClick={onClick}
             style={{
               position: "absolute",
               height: 2,

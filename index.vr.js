@@ -1,12 +1,12 @@
-import React from "react";
+import * as React from "react";
 import { AppRegistry, asset, Pano, View } from "react-vr";
 
-import MainMenu from "./components/main-menu/MainMenu";
-import TicTacToe from "./components/tic-tac-toe/TicTacToe";
+import MainMenu from "./src/main-menu/MainMenu";
+import TicTacToe from "./src/tic-tac-toe/TicTacToe";
 
 class ReactTacToe extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
 
     this.state = {
       playing: false
@@ -21,11 +21,7 @@ class ReactTacToe extends React.Component {
     return (
       <View>
         <Pano source={asset("fort-night.jpg")} />
-        {!playing ? (
-          <MainMenu onStart={this.startGame} />
-        ) : (
-          <TicTacToe onDone={this.endGame} />
-        )}
+        {!playing ? <MainMenu onStart={this.startGame} /> : <TicTacToe />}
       </View>
     );
   }

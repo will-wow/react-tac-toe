@@ -1,4 +1,4 @@
-import { intersects, maxOf } from "../../components/utils";
+import { intersects, maxOf } from "./utils";
 
 describe("utils", () => {
   describe("intersects", () => {

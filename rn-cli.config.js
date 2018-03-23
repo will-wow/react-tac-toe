@@ -22,6 +22,14 @@ const config = {
 
   getProvidesModuleNodeModules() {
     return ["react-native", "react-vr"];
+  },
+
+  getTransformModulePath() {
+    return require.resolve("react-native-typescript-transformer");
+  },
+
+  getSourceExts() {
+    return ["ts", "tsx"];
   }
 };
 

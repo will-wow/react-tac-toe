@@ -11,20 +11,25 @@
     "test": "jest",
     "format": "yarn format-eslint && yarn format-prettier",
     "format-eslint": "eslint --fix **/*.{js,jsx}",
-    "format-prettier": "prettier --write \"**/*.{js,jsx,json}\"",
+    "format-tslint": "tslint -p . --config tslint.json",
+    "format-prettier": "prettier --write \"**/*.{ts,tsx,js,jsx,json}\"",
     "deploy": "surge -p ./vr/build -d vr-tic-tac-toe.surge.sh"
   },
   "dependencies": {
     "ovrui": "~2.0.0",
     "ramda": "^0.25.0",
-    "react": "16.0.0",
+    "react-native-typescript-transformer": "^1.2.3",
     "react-native": "~0.48.0",
-    "react-vr": "~2.0.0",
     "react-vr-controller-raycaster": "^1.0.0",
     "react-vr-web": "~2.0.0",
+    "react-vr": "~2.0.0",
+    "react": "16.0.0",
     "three": "^0.87.0"
   },
   "devDependencies": {
+    "@types/jest": "^22.2.2",
+    "@types/react": "^16.0.40",
+    "@types/react-native": "^0.52.19",
     "babel-eslint": "^8.2.2",
     "babel-jest": "^19.0.0",
     "babel-preset-react-native": "^1.9.1",
@@ -39,9 +44,19 @@
     "react-devtools": "^2.5.2",
     "react-test-renderer": "16.0.0",
     "surge": "^0.20.1",
+    "tslint": "^5.9.1",
+    "tslint-config-airbnb": "^5.8.0",
+    "tslint-config-prettier": "^1.10.0",
+    "tslint-react": "^3.5.1",
+    "typescript": "^2.7.2",
     "xopen": "1.0.0"
   },
   "jest": {
-    "preset": "react-vr"
+    "preset": "react-vr",
+    "transform": {
+      "^.+\\.[jt]sx?$": "<rootDir>/jest/preprocessor.js"
+    },
+    "testMatch": ["<rootDir>/src/**/*-test.{ts,js,tsx,jsx}"],
+    "moduleFileExtensions": ["ts", "tsx", "js"]
   }
 }

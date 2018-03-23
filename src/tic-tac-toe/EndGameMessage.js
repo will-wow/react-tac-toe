@@ -1,4 +1,4 @@
-import React from "react";
+import * as React from "react";
 import { VrButton, Text, View } from "react-vr";
 
 const EndGameMessage = ({ player, onClick }) => (

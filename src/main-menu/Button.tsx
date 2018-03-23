@@ -1,4 +1,4 @@
-import React from "react";
+import * as React from "react";
 import { View, Text, VrButton } from "react-vr";
 
 const Button = ({ text, onClick }) => (

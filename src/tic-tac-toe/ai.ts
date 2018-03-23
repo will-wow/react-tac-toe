@@ -13,16 +13,7 @@ export const nextMove = aiPlayer => game => {
   return moveIndex;
 };
 
-const stateToKey = (currentPlayer, game) =>
-  R.pipe(
-    R.map(tile => (tile === "" ? " " : tile)),
-    R.append(currentPlayer),
-    R.join("")
-  )(game);
-
-const memoize = R.memoizeWith(stateToKey);
-
-const bestPossibleMove = memoize((currentPlayer, game, depth) =>
+const bestPossibleMove = R.memoize((currentPlayer, game, depth) =>
   R.pipe(
     indexesOfEmptyTiles,
     R.map(scoreMove(currentPlayer, game, depth)),

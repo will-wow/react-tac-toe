@@ -1,7 +1,25 @@
-import React from "react";
+import * as React from "react";
 import { Box } from "react-vr";
 
-const Line = ({ location, rotateZ, long, short, isHorizontal, color }) => {
+import { Coordinates } from "./Location";
+
+interface LineProps {
+  color: string;
+  long: number;
+  short: number;
+  isHorizontal?: boolean;
+  location?: Coordinates;
+  rotateZ?: number;
+}
+
+const Line: React.SFC<LineProps> = ({
+  location,
+  rotateZ,
+  long,
+  short,
+  isHorizontal,
+  color
+}) => {
   const height = isHorizontal ? long : short;
   const width = isHorizontal ? short : long;
 
